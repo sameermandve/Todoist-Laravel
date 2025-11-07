@@ -73,6 +73,16 @@ class TaskController extends Controller
             ->with('error', 'Failed to update task');
     }
 
+    public function showTask($id)
+    {
+        $task = Task::where("user_id", Auth::id())->where("id", $id)
+            ->get();
+        
+        return view("tasks.task", [
+            "data" => $task
+        ]);
+    }
+
     public function deleteTask($id)
     {
         $result = Task::destroy($id);

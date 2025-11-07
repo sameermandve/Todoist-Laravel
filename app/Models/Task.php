@@ -21,10 +21,6 @@ class Task extends Model
         'user_id',
     ];
 
-    protected $casts = [
-        "created-at" => "datetime"
-    ];
-
     protected function status(): Attribute{
         return Attribute::make(
             get: fn($value) => ucfirst($value),
@@ -34,7 +30,7 @@ class Task extends Model
 
     protected function createdAtFormatted(): Attribute{
         return Attribute::make(
-            get: fn($value) => $value?->format("d M, Y"),
+            get: fn() => $this->created_at->format("d M, Y"),
         );
     }
 

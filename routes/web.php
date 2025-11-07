@@ -38,5 +38,8 @@ Route::middleware("auth")->group(function () {
 
     Route::get("/task/history", [TaskController::class, "historyTaskList"])
         ->name("tasks.history");
+
+    Route::get("/task/{id}", [TaskController::class, 'showTask'])
+        ->name("task.view");
 });
 

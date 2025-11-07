@@ -57,9 +57,17 @@
                 <div class="w-full max-w-6xl px-4 mx-auto lg:px-12 my-4">
                     <div class="relative overflow-hidden bg-white shadow-md rounded-lg">
                         <div class="flex-row items-center justify-between p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4">
-                            <div>
-                                <h3 class="mr-3 text-lg font-bold">{{ $task->title }} <span class="font-semibold text-base">| {{ $task->deadline }}</span></h3>
-                                <p class="text-gray-500">{{ $task->description }}</p>
+                            <div class="flex flex-col sm:flex-row items-center">
+                                <a href="{{ route("task.view", $task->id) }}" class="mr-4">
+                                    <x-lucide-eye class="size-6" />
+                                </a>
+                                <div>
+                                    <h3 class="mr-3 text-lg font-bold">{{ $task->title }} <span class="font-semibold text-base">|
+                                            {{ $task->deadline }}</span></h3>
+                                    <p class="text-gray-500 mt-2">{{ Str::words($task->description, 20) }}</p>
+                                    <p class="text-gray-500 text-xs font-semibold mt-2">Added on: {{ $task->created_at_formatted }}
+                                    </p>
+                                </div>
                             </div>
                             <div class="flex items-center mt-2 sm:mt-0">
                                 <button type="button"
@@ -68,7 +76,8 @@
                                     {{ $task->status }}
                                 </button>
 
-                                <a href="{{ route("tasks.update", $task->id) }}" data-tooltip-target="tooltip-left" data-tooltip-placement="left" type="button"
+                                <a href="{{ route("tasks.update", $task->id) }}" data-tooltip-target="tooltip-left"
+                                    data-tooltip-placement="left" type="button"
                                     class="ms-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center">
                                     <x-lucide-check class="size-4" />
                                 </a>
@@ -78,7 +87,8 @@
                                     <div class="tooltip-arrow" data-popper-arrow></div>
                                 </div>
 
-                                <a href="{{ route("tasks.delete", $task->id) }}" data-tooltip-target="tooltip-right" data-tooltip-placement="left" type="button"
+                                <a href="{{ route("tasks.delete", $task->id) }}" data-tooltip-target="tooltip-right"
+                                    data-tooltip-placement="left" type="button"
                                     class="ms-3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center">
                                     <x-lucide-trash-2 class="size-4" />
                                 </a>
