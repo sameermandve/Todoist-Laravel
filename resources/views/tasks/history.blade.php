@@ -1,5 +1,7 @@
 @extends("layouts.default")
 
+@section("title", "Todoist | History")
+
 @section("main")
     <section class="flex flex-col items-center mt-25">
 
@@ -50,7 +52,7 @@
             </div>
         @endif
 
-        <h2 class="text-4xl font-bold">Your Tasks</h2>
+        <h2 class="text-4xl font-bold">Tasks History</h2>
 
         @if (count($tasks) > 0)
             @foreach ($tasks as $task)
@@ -60,6 +62,7 @@
                             <div>
                                 <h3 class="mr-3 text-lg font-bold">{{ $task->title }} <span class="font-semibold text-base">| {{ $task->deadline }}</span></h3>
                                 <p class="text-gray-500">{{ $task->description }}</p>
+                                <p class="text-gray-500 text-sm">Created on: <span class="font-semibold">{{ $task->created_at_formatted }}</span></p>
                             </div>
                             <div class="flex items-center mt-2 sm:mt-0">
                                 <button type="button"
@@ -68,8 +71,8 @@
                                     {{ $task->status }}
                                 </button>
 
-                                <a href="{{ route("tasks.update", $task->id) }}" data-tooltip-target="tooltip-left" data-tooltip-placement="left" type="button"
-                                    class="ms-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center">
+                                <a href="{{ route("tasks.update", $task->id) }}" data-tooltip-target="tooltip-left" data-tooltip-placement="left"
+                                    class="ms-3 {{ $task->status === "Completed" ? "cursor-not-allowed" : "hover:bg-blue-800" }} text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center">
                                     <x-lucide-check class="size-4" />
                                 </a>
                                 <div id="tooltip-left" role="tooltip"
@@ -94,7 +97,7 @@
             @endforeach
         @else
             <div class="flex items-center justify-center mt-30">
-                <h4 class="text-2xl font-semibold">No tasks added yet!</h4>
+                <h4 class="text-2xl font-semibold">No tasks available</h4>
             </div>
         @endif
     </section>
