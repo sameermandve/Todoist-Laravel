@@ -36,20 +36,18 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-# --- PHP Dependency Installation (Optimized for Caching) ---
-# FIX: Copy the essential 'artisan' file along with composer files, 
-# as composer scripts require 'artisan' to run 'package:discover'.
-COPY composer.json composer.lock artisan ./
+# --- Application Code Copy and Dependency Installation (Combined) ---
+# FIX APPLIED HERE: Copy all Laravel source files BEFORE composer install.
+# This ensures 'artisan' can bootstrap the application (finding 'bootstrap/app.php') 
+# when Composer runs the 'package:discover' script. This breaks the caching layer 
+# but resolves the runtime dependency error.
+COPY . .
 
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
 
-# --- Application Code and Assets Copy ---
-# Copy the rest of the backend source files (excluding vendor, which is already installed)
-COPY . .
-
 # Critical multi-stage step: Copy the built, optimized frontend assets
-# FIX APPLIED HERE: Corrected source and destination paths to match your 'public/build' output.
+# Corrected source and destination paths to match your 'public/build' output.
 COPY --from=frontend /app/public/build ./public/build
 
 # Clear and optimize Laravel caches
