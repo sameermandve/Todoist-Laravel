@@ -27,6 +27,8 @@
 
 *   **Laravel:** [laravel.com](https://laravel.com/)
 
+*   **Supabase:** [supabase.com](https://supabase.com/)
+
 *   **Tailwind:** [tailwindcss.com](https://tailwindcss.com/)
 
 *   **Flowbite:** [flowbite.com](https://flowbite.com/)
