@@ -48,8 +48,8 @@ RUN composer install --no-dev --optimize-autoloader
 COPY . .
 
 # Critical multi-stage step: Copy the built, optimized frontend assets
-# from the 'frontend' stage into the Laravel public directory.
-COPY --from=frontend /app/public/dist ./public/dist
+# FIX APPLIED HERE: Corrected source and destination paths to match your 'public/build' output.
+COPY --from=frontend /app/public/build ./public/build
 
 # Clear and optimize Laravel caches
 RUN php artisan config:clear && \
