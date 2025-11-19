@@ -37,8 +37,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # --- PHP Dependency Installation (Optimized for Caching) ---
-# Copy only the composer files. If these don't change, the dependency install layer is cached.
-COPY composer.json composer.lock ./
+# FIX: Copy the essential 'artisan' file along with composer files, 
+# as composer scripts require 'artisan' to run 'package:discover'.
+COPY composer.json composer.lock artisan ./
 
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
